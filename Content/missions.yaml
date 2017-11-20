@@ -1,0 +1,9 @@
+---
+ID: Gen_01
+Name: Mission 1
+Require:
+  Strength: 10
+Description: >
+  An exciting new adventure awaits in the underdark with the scaries and a beautiful girl named Mary, with silver hair
+   and pink eyes and a dark past and everyone loves her because she's just too good for this world. Test.
+Directory: miss_01

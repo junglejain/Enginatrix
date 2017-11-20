@@ -1,0 +1,40 @@
+---
+ID: cumslut
+Name: Cumslut
+PerOrgasmChance:
+  Receive:
+    Partner_Male:
+      Cum_Oral: 2
+      Cum_Body: 1
+      Cum_Facial: 2
+    Partner_Intersex:
+      Cum_Oral: 2
+      Cum_Body: 1
+      Cum_Facial: 2
+Learn:
+  Oral: x2
+  Petting: x2
+Perform:
+  Oral:
+    Arousal: 2
+Prefer:
+  - Sex_Oral
+  - Cum_Facial
+---
+ID: vag_virgin
+Name: Virgin
+Allowed:
+  - Sex_Female
+  - Sex_Intersex
+PerOrgasmChance:
+  Status_Virgin_Vaginal: 3
+Perform:
+  Any:
+    Arousal: 2
+On Change:
+  Status:
+    Virgin_Vaginal_No:
+      Arousal: -100
+      Stress: 100
+      Status_On: Depression
+      Fetish_Off: vag_virgin

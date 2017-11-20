@@ -1,0 +1,84 @@
+---
+Action: Work out
+Blocks: 1
+Trains:
+  Attributes:
+    Constitution:
+      Increase: 1
+      Descriptions:
+        18:
+          - Mary participates in a marathon.  She wins first place!
+        15:
+          - Mary participates in a marathon.  She wins second place!
+        10:
+          - >
+            Mary runs around the block several times.
+            Now she's all sweaty.  Gross! And this line will be one
+            line when it's printed.
+          - Mary does several jumping jacks.  Her breasts bounce.
+  Specias:
+    Arousal: 3
+    Stress: -3
+---
+Action: Combat
+Blocks: 2
+Trains:
+  Attributes:
+    Strength:
+      Increase: 1
+    Agility:
+      Increase: 1
+      Descriptions:
+        Any:
+          - >
+            An any flag means you can get this description at any level of skill.
+            This is good for general purpose descriptions.
+        18:
+          - Mary fights like a dancer.  And you can have descriptions under multiple sections -- See Combat!
+  Skills:
+    Combat:
+      Increase: 1
+      Descriptions:
+        18:
+          - Mary beats everyone.
+        15:
+          - Mary beats almost everyone.
+        10:
+          - Mary is good at stuff.
+  Specials:       # Specials do not have descriptions.  They only increase or decrease.
+    Arousal: 0
+    Stress: -5
+---
+Action: Glory Hole
+Blocks: 2
+Earn:
+  Min: 5
+  Max: 10
+Stimulation:
+  Rounds:
+    Min: 10
+    Max: 25
+  Cum_Skip_Rounds: 0
+  Act:
+    - Oral
+    - Petting
+  Partner: Stranger_Male
+Trains:
+  Skills:
+    Oral:
+      Increase: 5
+      Descriptions:
+        Any:
+          - Mary sucks cock.
+          - Mary sucks a lot of cock.
+          - Mary tried to put up some pretty curtains and had to be restrained.
+  Specials:
+    Arousal: -20
+    Stress: 10
+  Fetish:
+    Cumslut:
+      Descriptions:
+        - Mary lives for cum.
+        - Mary was found lying in a pool of cum, happier than she'd been in days.
+      Specials:
+        Arousal: 10

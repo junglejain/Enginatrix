@@ -1,0 +1,29 @@
+---
+ID: Gen_01_Char_01
+Name: Mary Sue
+Attributes:
+  Stength: 10
+  Agility: 10
+  Consitution: 5
+  Intelligence: 15
+  Creativity: 18
+  Perception: 18
+  Beauty: 20
+Skills:
+  All: 85
+Special:
+  Arousal: 50
+  Stress: 25
+  Trust: 99
+  Love: 15
+Description: >
+  Wow.  You've never seen someone so pretty.  She looks like a young Angelina Jolie, only way prettier.
+    Her hair and eyes are interesting and original colors.  She's also very sweet.  You can tell.
+Managed: Yes
+  Actions: char_01_actions.yaml
+Evening: Yes
+  Scenes: char_01_scenes.yaml
+Trainable: Yes
+Can Train: Yes
+Can Trust: Yes
+Can Love: Yes
