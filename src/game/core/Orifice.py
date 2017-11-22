@@ -3,7 +3,7 @@ from src.game.core.Database import Database
 from src.game.core.Messages import Messages
 
 
-class Vagina(object):
+class Orifice(object):
     """These are not normal measurements.  This is a fantasy game, and people don't want 5 inches to be the average
         penis size in their fantasy games, so I greatly increased normal vaginal length and width (and the standard
         deviation) and wildly over-estimated stretchability and arousal changes.  Also simplified centimeter to inch
@@ -26,13 +26,23 @@ class Vagina(object):
     max_length_train = 5            # 9-15 long
     max_width_train = 7.5           # 8-12 wide
 
-    def __init__(self, char):
+    def __init__(self, char, o_type):
         self.character = char
+        self.o_type = o_type
+
         if self.character.id > 0:
-            self.length, self.width = db.get_tup("select length, width from Char_Vag where char_id=?", self.character.id)
+            self.length, self.width = self.db.get_tup(
+                """select length, width from Char_Orifice where char_id=? and type=?""",
+                [self.character.id, self.o_type]
+            )
         else:
-            self.length = 0
             self.width = 0
+            self.length = 0
+
+        if not self.length or not self.width:
+            self.length = normal(self.length_mean, self.length_sd)
+            self.width = normal(self.width_mean, self.width_sd)
+            self.save()
 
     def arousal_length(self):
         # Arousal is actually arousal - stress:
@@ -60,19 +70,19 @@ class Vagina(object):
     def endurance_length(self):
         return (self.max_length_train / self.character.endurance.max) + self.character.endurance
 
-    def base_stimulation(self, implement, depth):
+    def base_stimulation(self, implement, depth='normal'):
         i_length = implement.length
         if depth == 'hard':
-            i_length += 2.5
-        if depth == 'soft':
-            i_length -= i_length * .8
+            i_length = i_length * 1.2
+        elif depth == 'soft':
+            i_length = i_length * .8
 
         arousal_width = self.width+self.arousal_width()
         train_width = arousal_width+self.train_width()
         stretch_width = train_width+self.max_width_stretch
         endurance_width = stretch_width+self.endurance_width()
 
-        train_length = self.length+self.arousal_length()+self.train_length()\
+        train_length = self.length+self.arousal_length()+self.train_length()
         stretch_length = train_length+self.max_length_stretch
         endurance_length = stretch_length+self.endurance_length()
 
@@ -81,17 +91,17 @@ class Vagina(object):
         stress = 0
         # Width under base is pointless.
         # Width between base and arousal is okay:
-        if implement.width >= self.width and implement.width < arousal_width:
+        if self.width <= implement.width < arousal_width:
             width_stim = 3
         # Between arousal and training is perfect:
-        if implement.width >= arousal_width and implement.width < train_width:
+        if arousal_width <= implement.width < train_width:
             width_stim = 5
         # Between training and stretch is okay, again, and furthers training:
-        if implement.width >= train_width and implement.width < stretch_width:
+        if train_width <= implement.width < stretch_width:
             width_stim = 3
             self.character.intercourse.check_raise()
         # Past max stretch gets into endurance training:
-        if implement.width >= stretch_width and implement.width < endurance_width:
+        if stretch_width <= implement.width < endurance_width:
             # If you're a masochist, this is perfect:
             if self.character.hasFetish('Masochist'):
                 width_stim = 5
@@ -103,9 +113,9 @@ class Vagina(object):
 
         length_stim = 0
 
-        if i_length >= train_length and i_length < stretch_length:
+        if train_length <= i_length < stretch_length:
             self.character.intercourse.check_raise()
-        if i_length >= stretch_length and i_length < endurance_length:
+        if stretch_length <= i_length < endurance_length:
             if self.character.hasFetish('Masochist'):
                 length_stim = 5
         if i_length >= endurance_length:
@@ -115,4 +125,8 @@ class Vagina(object):
 
         return width_stim+length_stim, stress
 
-    def stim_per_round(self, partner, act, pressure, implement=None):
+    def save(self):
+        self.db.save(
+            """INSERT INTO Char_Orifice (char_id, length, width, type) VALUES (?,?,?,?)""",
+            [self.character, self.length, self.width, self.o_type]
+        )

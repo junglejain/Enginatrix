@@ -35,3 +35,9 @@ class Database(object):
     def get_tup(self, query, params):
         row = self.get_one(query, params)
         return row[0], row[1]
+
+    def save(self, query, params):
+        c = self.conn.cursor()
+        c.execute(query, params)
+        c.close()
+        return c.lastrowid
